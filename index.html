@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+    crossorigin="anonymous" />
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+  <title>Australia's Vanishing Wild — Threatened Species</title>
+
+  <style>
+    /* ── Base ── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #222;
+      background: #ffffff;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    .hero {
+      background: #1a1a1a;
+      color: white;
+      padding: 3.5rem 3rem 2.5rem;
+      border-bottom: 5px solid #e67e22;
+    }
+    .hero-eyebrow {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.72rem;
+      font-weight: bold;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #e67e22;
+      margin-bottom: 0.8rem;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+      line-height: 1.05;
+      color: #ffffff;
+      margin-bottom: 0.8rem;
+    }
+    .hero h1 em { color: #e67e22; font-style: italic; }
+    .hero-sub {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1rem;
+      color: #aaaaaa;
+      max-width: 640px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      border-top: 1px solid #333;
+      padding-top: 1.5rem;
+    }
+    .stat {
+      padding-right: 2rem;
+      margin-right: 2rem;
+      border-right: 1px solid #333;
+    }
+    .stat:last-child { border-right: none; }
+    .stat .n { font-size: 2.4rem; font-weight: bold; color: #e67e22; line-height: 1; }
+    .stat .l {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #888;
+      margin-top: 0.2rem;
+    }
+
+    /* ── Section ── */
+ .section-header {
+  background: #1a1a1a;       /* dark instead of light grey */
+  border-bottom: 1px solid #444;
+  padding: 1.2rem 3rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+}
+
+.section-header h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;            /* white text instead of dark */
+}
+
+.section-num {
+  color: #e67e22;            /* keep orange number */
+}
+
+    /* ── Text ── */
+    .intro-text {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.95rem;
+      color: #444;
+      max-width: 720px;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+    .intro-text strong { color: #1a1a1a; }
+    .description {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.88rem;
+      color: #555;
+      max-width: 720px;
+      line-height: 1.7;
+      margin-top: 1rem;
+    }
+
+    /* ── Pull quote ── */
+    .pullquote {
+      border-left: 4px solid #e67e22;
+      background: #fffaf4;
+      padding: 0.8rem 1.4rem;
+      margin: 1.2rem 0 1.5rem;
+    }
+    .pullquote p {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* ── Chart layout ── */
+    .chart-grid { display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .chart-box {
+      flex: 1;
+      min-width: 280px;
+      background: #fafaf8;
+      border: 1px solid #ddd;
+      padding: 1.2rem;
+    }
+    .chart-box h3 {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #1a1a1a;
+      margin-bottom: 0.2rem;
+    }
+    .chart-box .chart-sub {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.78rem;
+      color: #888;
+      margin-bottom: 0.9rem;
+      line-height: 1.4;
+    }
+    .chart-box.full { width: 100%; flex: none; }
+
+    /* ── Source badge ── */
+    .src-badge {
+      display: inline-block;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.68rem;
+      font-weight: bold;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 2px;
+      margin-bottom: 0.6rem;
+    }
+    .s1 { background: #fde8e0; color: #c0392b; }
+    .s2 { background: #deeffe; color: #2471a3; }
+
+    /* ── Accent borders ── */
+    .b-red    { border-left: 4px solid #c0392b; }
+    .b-orange { border-left: 4px solid #e67e22; }
+    .b-green  { border-left: 4px solid #27ae60; }
+    .b-teal   { border-left: 4px solid #16a085; }
+    .b-blue   { border-left: 4px solid #2980b9; }
+    .b-purple { border-left: 4px solid #8e44ad; }
+
+    /* ── Callout row ── */
+    .callout-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .callout {
+      flex: 1; min-width: 150px;
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 1rem;
+    }
+    .callout-icon { font-size: 1.5rem; margin-bottom: 0.35rem; }
+    .callout h4 { font-size: 0.9rem; font-weight: bold; color: #1a1a1a; margin-bottom: 0.25rem; }
+    .callout p  {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.8rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    /* ── Timeline ── */
+    .timeline { margin-top: 1.5rem; }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid #ddd;
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-year { font-size: 1rem; font-weight: bold; color: #c0392b; padding-top: 2px; }
+    .tl-body h4 {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #1a1a1a;
+      margin-bottom: 0.15rem;
+    }
+    .tl-body p {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.82rem;
+      color: #666;
+      line-height: 1.55;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #1a1a1a;
+      color: #888;
+      padding: 2.5rem 3rem;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.82rem;
+      line-height: 1.7;
+    }
+    .foot-grid { display: flex; gap: 3rem; flex-wrap: wrap; }
+    .foot-col { flex: 1; min-width: 220px; }
+    footer h5 {
+      font-size: 0.72rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #ccc;
+      margin-bottom: 0.6rem;
+    }
+    footer a { color: #e67e22; text-decoration: none; }
+    footer p { margin-bottom: 0.5rem; }
+    .color-bar {
+      height: 4px;
+      background: linear-gradient(90deg, #c0392b, #e67e22, #f4b942, #27ae60, #16a085, #2980b9, #8e44ad);
+      margin-bottom: 2rem;
+    }
+
+    /* ── Vega ── */
+    .vega-embed { background: transparent !important; }
+    .vega-embed svg { background: transparent !important; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-eyebrow">FIT2179 Data Visualisation 2</div>
+  <h1>Australia's <em>Vanishing</em> Wild</h1>
+  <p class="hero-sub">
+    Australia is home to some of the most unique wildlife on Earth and one of the worst extinction records in the world.
+    This visualisation explores the scale, geography, and drivers of Australia's threatened species crisis,
+    using official data from the Australian Government's EPBC Act and the National Environmental Science Program.
+  </p>
+  <div class="hero-stats">
+    <div class="stat"><div class="n">2,208</div><div class="l">Species &amp; communities listed</div></div>
+    <div class="stat"><div class="n">102</div><div class="l">Extinct since 1788</div></div>
+    <div class="stat"><div class="n">453</div><div class="l">Critically endangered</div></div>
+    <div class="stat"><div class="n">860</div><div class="l">Endangered</div></div>
+    <div class="stat"><div class="n">141</div><div class="l">Recovery projects funded</div></div>
+  </div>
+</header>
+
+<!-- SECTION 1 — THE SCALE -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>The Scale of the Crisis</h2>
+  </div>
+  <div class="section-body">
+    <p class="intro-text">
+      Under the <strong>Environment Protection and Biodiversity Conservation (EPBC) Act 1999</strong>,
+      the Australian Government officially lists species and ecological communities at risk of extinction.
+      As of February 2026, the list contains <strong>2,208 entries</strong> and grows every year.
+      Plants account for the largest share, but Australia's mammals and birds have captured global attention for their alarming decline.
+    </p>
+    <div class="pullquote">
+      <p>"Since European settlement, Australia has lost more mammal species than any other country on the planet and the losses continue."</p>
+    </div>
+    <div class="chart-grid">
+      <div class="chart-box b-red">
+        <!-- <span class="src-badge s1">Source 1 — DCCEEW 2026</span> -->
+        <h3>Status Breakdown</h3>
+        <div class="chart-sub">Share of threatened species by EPBC listing category, February 2026.</div>
+        <div id="chart-donut"></div>
+      </div>
+      <div class="chart-box b-orange">
+        <!-- <span class="src-badge s1">Source 1 — DCCEEW 2026</span> -->
+        <h3>Which Animals Are Most at Risk?</h3>
+        <div class="chart-sub">Threatened species by taxonomic group and severity of threat.</div>
+        <div id="chart-stacked"></div>
+      </div>
+    </div>
+    <div class="callout-row">
+      <div class="callout">
+        <div class="callout-icon">🌿</div>
+        <h4>Plants — 1,514 species</h4>
+        <p>The largest group. Most are restricted to tiny areas and receive far less public attention than animals.</p>
+      </div>
+      <div class="callout">
+        <div class="callout-icon">🦘</div>
+        <h4>Mammals — 152 species</h4>
+        <p>Australia has lost over 30 mammal species since 1788, the highest extinction rate on Earth.</p>
+      </div>
+      <div class="callout">
+        <div class="callout-icon">🦜</div>
+        <h4>Birds — 186 species</h4>
+        <p>Species like the Swift Parrot and Regent Honeyeater face extinction within decades without action.</p>
+      </div>
+      <div class="callout">
+        <div class="callout-icon">🦎</div>
+        <h4>Reptiles — 102 species</h4>
+        <p>Australia's unique reptile fauna is threatened by habitat loss, fire, and invasive predators.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2 — GEOGRAPHY -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Where Are They?</h2>
+  </div>
+  <div class="section-body">
+    <p class="intro-text">
+      Threatened species are not evenly distributed across Australia.
+      <strong>New South Wales</strong> hosts the most threatened species of any state,
+      driven by high biodiversity and decades of land clearing.
+      <strong>Western Australia</strong> follows closely, with an extraordinary number of endemic plants found nowhere else on Earth.
+    </p>
+    <div class="chart-grid">
+      <div class="chart-box full b-teal">
+        <!-- <span class="src-badge s1">Source 1 — DCCEEW 2026</span> -->
+        <h3>Threatened Species by State / Territory</h3>
+        <div class="chart-sub">Total EPBC-listed threatened species with indicative occurrence in each state or territory. Hover over a state to see its count.</div>
+        <div id="chart-choropleth"></div>
+      </div>
+    </div>
+    <p class="description">
+      NSW and WA carry the heaviest loads. The Northern Territory, despite its vast land area,
+      has fewer listed species but faces severe pressure from feral animals and fire.
+    </p>
+    <div class="chart-grid" style="margin-top:1.5rem;">
+      <div class="chart-box full b-blue">
+        <!-- <span class="src-badge s1">Source 1 — DCCEEW 2026</span> -->
+        <h3>Threat Intensity by State and Category</h3>
+        <div class="chart-sub">Each cell shows the number of species in that threat category in that state. Darker cells mean more species at risk.</div>
+        <div id="chart-heatmap"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 — STATE BREAKDOWN -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>A Closer Look by State</h2>
+  </div>
+  <div class="section-body">
+    <p class="intro-text">
+      The panels below show <strong>Critically Endangered</strong> species by taxonomic group for each state — a
+      small-multiples layout that reveals exactly where the most urgent pressure falls.
+      The scatter plot shows that state size alone does not explain the count.
+    </p>
+    <div class="chart-grid">
+      <div class="chart-box full b-purple">
+        <!-- <span class="src-badge s1">Source 1 — DCCEEW 2026</span> -->
+        <h3>Critically Endangered Species by Group — Each State</h3>
+        <div class="chart-sub">Each small panel shows one state or territory. Bars show counts by taxonomic group.</div>
+        <div id="chart-small"></div>
+      </div>
+    </div>
+    <div class="chart-grid" style="margin-top:1.5rem;">
+      <div class="chart-box full b-green">
+        <!-- <span class="src-badge s1">Source 1 — DCCEEW 2026</span> -->
+        <h3>Does a Bigger State Mean More Threatened Species?</h3>
+        <div class="chart-sub">State land area (log scale) vs total threatened species. WA's extraordinary endemic flora pushes it well above its size peers.</div>
+        <div id="chart-scatter"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3.5 — TREND OVER TIME -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Is It Getting Worse?</h2>
+  </div>
+  <div class="section-body">
+    <p class="intro-text">
+      Every year, new species are added to the threatened list and almost none are removed through recovery.
+      The cumulative total has been <strong>rising steadily since 2000</strong>, and the annual rate of new listings
+      has increased sharply since 2015. The 2019–20 Black Summer bushfires pushed dozens of already-stressed species closer to extinction.
+    </p>
+    <div class="chart-grid">
+      <div class="chart-box b-orange">
+        <h3>Cumulative Threatened Species Listed Since 2000</h3>
+        <div class="chart-sub">Total EPBC-listed threatened species accumulating over time. Source: DCCEEW.</div>
+        <div id="chart-trend"></div>
+      </div>
+      <div class="chart-box b-red">
+        <h3>New Species Added to the List Each Year</h3>
+        <div class="chart-sub">Annual new additions to the EPBC threatened list. A growing bar means the crisis is worsening. Source: DCCEEW.</div>
+        <div id="chart-new"></div>
+      </div>
+    </div>
+    <p class="description">
+      The number of new listings per year has nearly tripled since 2000.
+      The spike visible after 2019 reflects reassessments triggered by the Black Summer fires,
+      which burned over 18.6 million hectares the habitat of more than 800 threatened species.
+    </p>
+  </div>
+</section>
+
+<!-- SECTION 4 — RESPONSE -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>What Is Being Done?</h2>
+  </div>
+  <div class="section-body">
+    <p class="intro-text">
+      The Australian Government's <strong>National Environmental Science Program (NESP) Threatened Species Recovery Hub</strong>
+      funded 141 research projects between 2015 and 2021, spanning the entire continent.
+      Projects ranged from emergency triage of at-risk species to large-scale island conservation programs.
+    </p>
+    <div class="chart-grid">
+      <div class="chart-box b-blue">
+        <!-- <span class="src-badge s2">Source 2 — NESP TSR Hub 2021</span> -->
+        <h3>Recovery Projects by Program Focus</h3>
+        <div class="chart-sub">Number of funded research projects under each of the eight TSR Hub priority programs.</div>
+        <div id="chart-programs"></div>
+      </div>
+      <div class="chart-box b-teal">
+        <!-- <span class="src-badge s2">Source 2 — NESP TSR Hub 2021</span> -->
+        <h3>Top Research Themes</h3>
+        <div class="chart-sub">Most frequent research focus keywords across 141 recovery projects.</div>
+        <div id="chart-themes"></div>
+      </div>
+    </div>
+    <div class="pullquote" style="margin-top:1.5rem;">
+      <p>Despite 141 funded recovery projects, new species continue to be listed faster than any are removed. The crisis is outpacing the response.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5 — THREATS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2>What Is Driving Extinction?</h2>
+  </div>
+  <div class="section-body">
+    <p class="intro-text">
+      No single cause is responsible. Australia's extinction crisis is driven by <strong>habitat loss, invasive species, and altered fire regimes</strong> all accelerated by climate change.
+      Introduced feral cats kill an estimated 1.5 billion native animals every year.
+    </p>
+    <div class="chart-grid">
+      <div class="chart-box full b-red">
+        <h3>Key Threats to Threatened Species</h3>
+        <div class="chart-sub">Number of threatened species affected by each key threatening process. Source: DCCEEW SPRAT database.</div>
+        <div id="chart-threats"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6 — GONE FOREVER -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2>Gone Forever</h2>
+  </div>
+  <div class="section-body">
+    <p class="intro-text">
+      These are not distant historical losses. Many extinctions have happened within living memory and some within the last decade. Each loss is permanent.
+    </p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1936</div>
+        <div class="tl-body">
+          <h4>Thylacine (Tasmanian Tiger)</h4>
+          <p>The last known individual died in Hobart Zoo. The species was hunted to extinction under a government bounty scheme.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1960s</div>
+        <div class="tl-body">
+          <h4>Desert Bandicoot · Lesser Bilby</h4>
+          <p>Both central Australian species vanished as predator pressure and habitat degradation intensified after European settlement.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2009</div>
+        <div class="tl-body">
+          <h4>Christmas Island Pipistrelle</h4>
+          <p>A small bat species. Emergency captive breeding was proposed but no action was taken in time. The last individual was recorded in August 2009.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2016</div>
+        <div class="tl-body">
+          <h4>Bramble Cay Melomys</h4>
+          <p>Australia's first mammal extinction directly attributed to climate change. Rising sea levels inundated its only known habitat in the Torres Strait.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2021</div>
+        <div class="tl-body">
+          <h4>Smooth Handfish · 12 other species</h4>
+          <p>Thirteen species officially declared extinct following a post-Black Summer bushfire review by the EPBC Threatened Species Scientific Committee.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2>References</h2>
+  </div>
+  <div class="section-body">
+    <p class="description">This visualisation was created by Thunyatida Inthuprapha      Student ID: 35640278 </p>
+    <br>
+    <p class="description"><strong>Source 1:</strong> Department of Climate Change, Energy, the Environment and Water (DCCEEW).
+    <em>Threatened Species and Ecological Communities — EPBC Act State Lists.</em>
+    Updated 6 February 2026.
+    <a href="https://data.gov.au/data/dataset/threatened-species-state-lists">data.gov.au</a> · CC BY 3.0 AU</p>
+    <br>
+    <p class="description"><strong>Source 2:</strong> National Environmental Science Program (NESP), DCCEEW.
+    <em>Threatened Species Recovery Hub Activity Locations.</em> 2015–2021.
+    <a href="https://fed.dcceew.gov.au/datasets/f756760d8bcd4e7cb43b846fcdc6d5ae_0/explore">fed.dcceew.gov.au</a> · CC BY 4.0</p>
+    <br>
+    <p class="description"><strong>Threats data:</strong> DCCEEW SPRAT Key Threatening Processes database.
+    <a href="https://www.environment.gov.au/cgi-bin/sprat/public/publicthreatenedlist.pl">environment.gov.au</a></p>
+    <br>
+    <p class="description"><strong>Australia state boundaries (GeoJSON):</strong> Rowan Hogan.
+    <a href="https://github.com/rowanhogan/australian-states">github.com/rowanhogan/australian-states</a></p>
+    <br>
+    <p class="description">⚠️ Generative AI (Claude, Anthropic) was used to assist with code structure, layout, and grammar checking. All chart design decisions, data selection, and narrative are the author's own.</p>
+  </div>
+</section>
+
+<script>
+  const CFG = {
+    actions: false,
+    renderer: "svg",
+    config: {
+      background: "transparent",
+      font: "Arial, Helvetica, sans-serif",
+      axis: {
+        labelColor: "#555",
+        titleColor: "#333",
+        gridColor: "#e8e3db",
+        domainColor: "#ccc",
+        tickColor: "#ccc",
+        labelFontSize: 12,
+        titleFontSize: 13
+      },
+      legend: {
+        labelColor: "#555",
+        titleColor: "#333",
+        labelFontSize: 12,
+        titleFontSize: 12
+      },
+      view: { fill: "transparent", stroke: null }
+    }
+  };
+
+  vegaEmbed('#chart-donut',      'charts/chart_donut.json',             CFG);
+  vegaEmbed('#chart-stacked',    'charts/chart_stacked_bar.json',       CFG);
+  vegaEmbed('#chart-choropleth', 'charts/chart_choropleth.json',        CFG);
+  vegaEmbed('#chart-heatmap',    'charts/chart_heatmap.json',           CFG);
+  vegaEmbed('#chart-small',      'charts/chart_small_multiples.json',   CFG);
+  vegaEmbed('#chart-scatter',    'charts/chart_scatter.json',           CFG);
+  vegaEmbed('#chart-trend',      'charts/chart_trend.json',             CFG);
+  vegaEmbed('#chart-new',        'charts/chart_new_listings.json',      CFG);
+  vegaEmbed('#chart-programs',   'charts/chart_research_programs.json', CFG);
+  vegaEmbed('#chart-themes',     'charts/chart_research_themes.json',   CFG);
+  vegaEmbed('#chart-threats',    'charts/chart_threats.json',           CFG);
+</script>
+</body>
+</html>
