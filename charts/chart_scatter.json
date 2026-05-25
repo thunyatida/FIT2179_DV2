@@ -1,0 +1,47 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Threatened species count vs state land area. Source: DCCEEW Feb 2026.",
+  "width": 500,
+  "height": 300,
+  "data": {
+    "values": [
+      {"state": "NSW", "area_km2": 800642,  "total": 760, "region": "East"},
+      {"state": "VIC", "area_km2": 227444,  "total": 357, "region": "East"},
+      {"state": "QLD", "area_km2": 1730648, "total": 612, "region": "North"},
+      {"state": "WA",  "area_km2": 2529875, "total": 614, "region": "West"},
+      {"state": "SA",  "area_km2": 983482,  "total": 319, "region": "Central"},
+      {"state": "TAS", "area_km2": 68401,   "total": 230, "region": "East"},
+      {"state": "NT",  "area_km2": 1349129, "total": 155, "region": "North"},
+      {"state": "ACT", "area_km2": 2358,    "total": 71,  "region": "East"}
+    ]
+  },
+  "layer": [
+    {
+      "mark": {"type": "circle", "opacity": 0.85},
+      "encoding": {
+        "x": {"field": "area_km2", "type": "quantitative", "scale": {"type": "log"}, "axis": {"title": "State Area (km², log scale)", "grid": true}},
+        "y": {"field": "total", "type": "quantitative", "axis": {"title": "Total Threatened Species", "grid": true}},
+        "size": {"field": "total", "type": "quantitative", "scale": {"range": [80, 600]}, "legend": null},
+        "color": {
+          "field": "region", "type": "nominal",
+          "scale": {"domain": ["East","North","West","Central"], "range": ["#2980b9","#e67e22","#27ae60","#c0392b"]},
+          "legend": {"title": "Region", "labelFontSize": 12, "titleFontSize": 12}
+        },
+        "tooltip": [
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "area_km2", "type": "quantitative", "title": "Area (km²)", "format": ","},
+          {"field": "total", "type": "quantitative", "title": "Threatened Species"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "text", "dy": -14, "fontSize": 12, "fontWeight": "600", "fill": "#333"},
+      "encoding": {
+        "x": {"field": "area_km2", "type": "quantitative", "scale": {"type": "log"}},
+        "y": {"field": "total", "type": "quantitative"},
+        "text": {"field": "state", "type": "nominal"}
+      }
+    }
+  ],
+  "config": {"background": "transparent", "view": {"stroke": null}}
+}

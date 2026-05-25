@@ -1,0 +1,31 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Critically Endangered species by group for each state. Source: DCCEEW Feb 2026.",
+  "data": {"url": "data/threatened_species.json"},
+  "transform": [{"filter": {"field": "status", "equal": "Critically Endangered"}}],
+  "facet": {
+    "field": "state_code", "type": "nominal",
+    "header": {"labelFontSize": 13, "labelFontWeight": "bold", "labelColor": "#333"}
+  },
+  "columns": 4,
+  "spec": {
+    "width": 120, "height": 100,
+    "data": {"url": "data/by_group.json"},
+    "transform": [{"filter": {"field": "status", "equal": "Critically Endangered"}}],
+    "mark": {"type": "bar"},
+    "encoding": {
+      "x": {"field": "group", "type": "nominal", "axis": {"title": null, "labelFontSize": 9, "labelAngle": -35}},
+      "y": {"field": "count", "type": "quantitative", "axis": {"title": null, "labelFontSize": 9, "grid": true}},
+      "color": {
+        "field": "group", "type": "nominal",
+        "scale": {
+          "domain": ["Birds","Mammals","Plants (Flowering)","Plants (Monocot)","Reptiles","Amphibians","Fish","Insects"],
+          "range": ["#2980b9","#e67e22","#27ae60","#16a085","#8e44ad","#1abc9c","#c0392b","#f4b942"]
+        },
+        "legend": null
+      },
+      "tooltip": [{"field": "group", "type": "nominal", "title": "Group"}, {"field": "count", "type": "quantitative", "title": "Critically Endangered"}]
+    }
+  },
+  "config": {"background": "transparent", "view": {"stroke": "#ddd", "strokeWidth": 1}}
+}

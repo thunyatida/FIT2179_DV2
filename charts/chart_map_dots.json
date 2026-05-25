@@ -1,0 +1,62 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Sighting locations of threatened species across Australia",
+  "width": 600,
+  "height": 420,
+  "projection": {"type": "mercator"},
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
+        "format": {"type": "json", "property": "features"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#1e1e3a",
+        "stroke": "#444466",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {"url": "data/occurrences.json"},
+      "mark": {
+        "type": "circle",
+        "opacity": 0.8,
+        "stroke": "#1a1a2e",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "size": {"value": 80},
+        "color": {
+          "field": "status",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Extinct", "Critically Endangered", "Endangered", "Vulnerable"],
+            "range": ["#2d2d2d", "#c0392b", "#e67e22", "#f1c40f"]
+          },
+          "legend": {
+            "title": "EPBC Status",
+            "titleFont": "Crimson Pro",
+            "labelFont": "Crimson Pro",
+            "labelFontSize": 12,
+            "titleFontSize": 13,
+            "orient": "bottom-right"
+          }
+        },
+        "tooltip": [
+          {"field": "species", "type": "nominal", "title": "Species"},
+          {"field": "group", "type": "nominal", "title": "Group"},
+          {"field": "status", "type": "nominal", "title": "Status"},
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "year", "type": "quantitative", "title": "Year Sighted"}
+        ]
+      }
+    }
+  ],
+  "config": {
+    "background": "transparent",
+    "view": {"stroke": null}
+  }
+}

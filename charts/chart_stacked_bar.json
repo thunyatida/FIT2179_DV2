@@ -1,0 +1,33 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Threatened species by taxonomic group and EPBC status. Source: DCCEEW Feb 2026.",
+  "width": 360,
+  "height": 280,
+  "data": {"url": "data/by_group.json"},
+  "mark": {"type": "bar"},
+  "encoding": {
+    "x": {
+      "field": "group", "type": "nominal",
+      "sort": ["-y"],
+      "axis": {"title": null, "labelAngle": -25, "labelFontSize": 11}
+    },
+    "y": {
+      "aggregate": "sum", "field": "count", "type": "quantitative",
+      "axis": {"title": "Number of Species", "titleFontSize": 12, "labelFontSize": 11, "grid": true}
+    },
+    "color": {
+      "field": "status", "type": "nominal",
+      "scale": {
+        "domain": ["Critically Endangered","Endangered","Vulnerable"],
+        "range": ["#c0392b","#e67e22","#f4b942"]
+      },
+      "legend": {"title": "Status", "labelFontSize": 11, "titleFontSize": 11}
+    },
+    "tooltip": [
+      {"field": "group", "type": "nominal", "title": "Group"},
+      {"field": "status", "type": "nominal", "title": "Status"},
+      {"aggregate": "sum", "field": "count", "type": "quantitative", "title": "Species"}
+    ]
+  },
+  "config": {"background": "transparent", "view": {"stroke": null}}
+}

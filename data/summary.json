@@ -1,0 +1,22 @@
+[
+  {
+    "status": "Extinct",
+    "count": 102,
+    "order": 1
+  },
+  {
+    "status": "Critically Endangered",
+    "count": 453,
+    "order": 2
+  },
+  {
+    "status": "Endangered",
+    "count": 860,
+    "order": 3
+  },
+  {
+    "status": "Vulnerable",
+    "count": 785,
+    "order": 4
+  }
+]

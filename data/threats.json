@@ -1,0 +1,14 @@
+[
+  {"threat": "Habitat Loss & Fragmentation", "category": "Land Use", "species_affected": 847},
+  {"threat": "Invasive Species", "category": "Biological", "species_affected": 624},
+  {"threat": "Changed Fire Regimes", "category": "Environmental", "species_affected": 312},
+  {"threat": "Climate Change", "category": "Environmental", "species_affected": 489},
+  {"threat": "Grazing", "category": "Land Use", "species_affected": 401},
+  {"threat": "Logging & Wood Harvesting", "category": "Land Use", "species_affected": 278},
+  {"threat": "Urban Development", "category": "Land Use", "species_affected": 367},
+  {"threat": "Predation by Cats", "category": "Biological", "species_affected": 531},
+  {"threat": "Predation by Foxes", "category": "Biological", "species_affected": 398},
+  {"threat": "Altered Water Regimes", "category": "Environmental", "species_affected": 214},
+  {"threat": "Disease", "category": "Biological", "species_affected": 187},
+  {"threat": "Pollution", "category": "Environmental", "species_affected": 156}
+]

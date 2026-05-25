@@ -1,0 +1,25 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Top research themes in TSR Hub projects. Source: DCCEEW 2021.",
+  "width": 300,
+  "height": 240,
+  "data": {"url": "data/research_themes.json"},
+  "mark": {"type": "bar", "cornerRadiusTopRight": 3, "cornerRadiusBottomRight": 3},
+  "encoding": {
+    "y": {"field": "theme", "type": "nominal", "sort": "-x", "axis": {"title": null, "labelFontSize": 12, "labelLimit": 160}},
+    "x": {
+      "field": "count", "type": "quantitative",
+      "axis": {"title": "Number of Projects", "titleFontSize": 12, "labelFontSize": 11, "grid": true}
+    },
+    "color": {
+      "field": "theme", "type": "nominal",
+      "scale": {"scheme": "tableau10"},
+      "legend": null
+    },
+    "tooltip": [
+      {"field": "theme", "type": "nominal", "title": "Theme"},
+      {"field": "count", "type": "quantitative", "title": "Projects"}
+    ]
+  },
+  "config": {"background": "transparent", "view": {"stroke": null}}
+}

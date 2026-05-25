@@ -1,0 +1,122 @@
+[
+  {
+    "group": "Birds",
+    "status": "Critically Endangered",
+    "count": 18
+  },
+  {
+    "group": "Birds",
+    "status": "Endangered",
+    "count": 69
+  },
+  {
+    "group": "Birds",
+    "status": "Vulnerable",
+    "count": 77
+  },
+  {
+    "group": "Mammals",
+    "status": "Critically Endangered",
+    "count": 9
+  },
+  {
+    "group": "Mammals",
+    "status": "Endangered",
+    "count": 47
+  },
+  {
+    "group": "Mammals",
+    "status": "Vulnerable",
+    "count": 57
+  },
+  {
+    "group": "Reptiles",
+    "status": "Critically Endangered",
+    "count": 27
+  },
+  {
+    "group": "Reptiles",
+    "status": "Endangered",
+    "count": 40
+  },
+  {
+    "group": "Reptiles",
+    "status": "Vulnerable",
+    "count": 34
+  },
+  {
+    "group": "Amphibians",
+    "status": "Critically Endangered",
+    "count": 18
+  },
+  {
+    "group": "Amphibians",
+    "status": "Endangered",
+    "count": 15
+  },
+  {
+    "group": "Amphibians",
+    "status": "Vulnerable",
+    "count": 16
+  },
+  {
+    "group": "Fish",
+    "status": "Critically Endangered",
+    "count": 26
+  },
+  {
+    "group": "Fish",
+    "status": "Endangered",
+    "count": 27
+  },
+  {
+    "group": "Fish",
+    "status": "Vulnerable",
+    "count": 16
+  },
+  {
+    "group": "Insects",
+    "status": "Critically Endangered",
+    "count": 13
+  },
+  {
+    "group": "Insects",
+    "status": "Endangered",
+    "count": 10
+  },
+  {
+    "group": "Insects",
+    "status": "Vulnerable",
+    "count": 5
+  },
+  {
+    "group": "Plants (Flowering)",
+    "status": "Critically Endangered",
+    "count": 221
+  },
+  {
+    "group": "Plants (Flowering)",
+    "status": "Endangered",
+    "count": 429
+  },
+  {
+    "group": "Plants (Flowering)",
+    "status": "Vulnerable",
+    "count": 444
+  },
+  {
+    "group": "Plants (Monocot)",
+    "status": "Critically Endangered",
+    "count": 76
+  },
+  {
+    "group": "Plants (Monocot)",
+    "status": "Endangered",
+    "count": 155
+  },
+  {
+    "group": "Plants (Monocot)",
+    "status": "Vulnerable",
+    "count": 95
+  }
+]

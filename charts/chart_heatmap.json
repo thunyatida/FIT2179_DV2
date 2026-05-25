@@ -1,0 +1,30 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Heatmap of threatened species by state and EPBC status. Source: DCCEEW Feb 2026.",
+  "width": 560,
+  "height": 160,
+  "data": {"url": "data/threatened_species.json"},
+  "transform": [
+    {"filter": {"field": "status", "oneOf": ["Critically Endangered","Endangered","Vulnerable"]}}
+  ],
+  "mark": {"type": "rect"},
+  "encoding": {
+    "x": {"field": "state_code", "type": "nominal", "axis": {"title": null, "labelFontSize": 12}},
+    "y": {
+      "field": "status", "type": "nominal",
+      "sort": ["Critically Endangered","Endangered","Vulnerable"],
+      "axis": {"title": null, "labelFontSize": 12}
+    },
+    "color": {
+      "field": "count", "type": "quantitative",
+      "scale": {"scheme": "orangered"},
+      "legend": {"title": "Species", "gradientLength": 120, "labelFontSize": 11, "titleFontSize": 11}
+    },
+    "tooltip": [
+      {"field": "state", "type": "nominal", "title": "State"},
+      {"field": "status", "type": "nominal", "title": "Status"},
+      {"field": "count", "type": "quantitative", "title": "Species"}
+    ]
+  },
+  "config": {"background": "transparent", "view": {"stroke": null}, "axis": {"domain": false, "ticks": false}}
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Total EPBC-listed threatened species by Australian state/territory. Source: DCCEEW Feb 2026.",
+  "width": 680,
+  "height": 420,
+  "projection": {"type": "mercator"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
+    "format": {"type": "json", "property": "features"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.STATE_NAME",
+      "from": {
+        "data": {"url": "data/choropleth_totals.json"},
+        "key": "state", "fields": ["total", "state_code"]
+      }
+    }
+  ],
+  "layer": [
+    {
+      "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 1.5},
+      "encoding": {
+        "color": {
+          "field": "total", "type": "quantitative",
+          "scale": {"scheme": "orangered", "domain": [50, 800]},
+          "legend": {"title": "Threatened Species", "orient": "bottom-right", "gradientLength": 160, "labelFontSize": 11, "titleFontSize": 12}
+        },
+        "tooltip": [
+          {"field": "properties.STATE_NAME", "type": "nominal", "title": "State / Territory"},
+          {"field": "total", "type": "quantitative", "title": "Threatened Species"}
+        ]
+      }
+    }
+  ],
+  "config": {"background": "transparent", "view": {"stroke": null}}
+}

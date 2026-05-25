@@ -1,0 +1,29 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Key threats to threatened species in Australia. Source: DCCEEW SPRAT.",
+  "width": 440,
+  "height": 320,
+  "data": {"url": "data/threats.json"},
+  "mark": {"type": "bar", "cornerRadiusTopRight": 3, "cornerRadiusBottomRight": 3},
+  "encoding": {
+    "y": {"field": "threat", "type": "nominal", "sort": "-x", "axis": {"title": null, "labelFontSize": 12, "labelLimit": 240}},
+    "x": {
+      "field": "species_affected", "type": "quantitative",
+      "axis": {"title": "Species Affected", "titleFontSize": 12, "labelFontSize": 11, "grid": true}
+    },
+    "color": {
+      "field": "category", "type": "nominal",
+      "scale": {
+        "domain": ["Land Use","Biological","Environmental"],
+        "range": ["#c0392b","#8e44ad","#2980b9"]
+      },
+      "legend": {"title": "Threat Type", "labelFontSize": 12, "titleFontSize": 12}
+    },
+    "tooltip": [
+      {"field": "threat", "type": "nominal", "title": "Threat"},
+      {"field": "category", "type": "nominal", "title": "Category"},
+      {"field": "species_affected", "type": "quantitative", "title": "Species Affected"}
+    ]
+  },
+  "config": {"background": "transparent", "view": {"stroke": null}}
+}

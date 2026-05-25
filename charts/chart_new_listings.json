@@ -1,0 +1,53 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "New species added to threatened list each year",
+  "width": 480,
+  "height": 260,
+  "data": {"url": "data/listings_trend.json"},
+  "mark": {
+    "type": "bar",
+    "cornerRadiusTopRight": 4,
+    "cornerRadiusBottomRight": 4
+  },
+  "encoding": {
+    "y": {
+      "field": "year",
+      "type": "ordinal",
+      "axis": {
+        "title": null,
+        "labelFont": "Crimson Pro",
+        "labelFontSize": 12
+      },
+      "sort": "-x"
+    },
+    "x": {
+      "field": "newly_listed",
+      "type": "quantitative",
+      "axis": {
+        "title": "New Species Listed",
+        "titleFont": "Crimson Pro",
+        "labelFont": "Crimson Pro",
+        "titleFontSize": 13,
+        "labelFontSize": 12,
+        "grid": true,
+        "gridColor": "#333355",
+        "gridOpacity": 0.4
+      }
+    },
+    "color": {
+      "field": "newly_listed",
+      "type": "quantitative",
+      "scale": {"range": ["#f1c40f", "#c0392b"]},
+      "legend": null
+    },
+    "tooltip": [
+      {"field": "year", "type": "ordinal", "title": "Year"},
+      {"field": "newly_listed", "type": "quantitative", "title": "Newly Listed"}
+    ]
+  },
+  "config": {
+    "background": "transparent",
+    "view": {"stroke": null},
+    "axis": {"domainColor": "#555577", "tickColor": "#555577"}
+  }
+}

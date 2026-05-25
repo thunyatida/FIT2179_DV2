@@ -1,0 +1,25 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Breakdown of Australian threatened species by EPBC status. Source: DCCEEW Feb 2026.",
+  "width": 260,
+  "height": 260,
+  "data": {"url": "data/summary.json"},
+  "mark": {"type": "arc", "innerRadius": 70, "outerRadius": 120, "stroke": "white", "strokeWidth": 2},
+  "encoding": {
+    "theta": {"field": "count", "type": "quantitative"},
+    "order": {"field": "order", "type": "quantitative"},
+    "color": {
+      "field": "status", "type": "nominal",
+      "scale": {
+        "domain": ["Extinct","Critically Endangered","Endangered","Vulnerable"],
+        "range": ["#2d2d2d","#c0392b","#e67e22","#f4b942"]
+      },
+      "legend": {"title": "EPBC Status", "orient": "right", "labelFontSize": 12, "titleFontSize": 12}
+    },
+    "tooltip": [
+      {"field": "status", "type": "nominal", "title": "Status"},
+      {"field": "count", "type": "quantitative", "title": "Species Count"}
+    ]
+  },
+  "config": {"background": "transparent", "view": {"stroke": null}}
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "state_code": "ACT",
+    "state": "Australian Capital Territory",
+    "total": 71
+  },
+  {
+    "state_code": "NSW",
+    "state": "New South Wales",
+    "total": 760
+  },
+  {
+    "state_code": "NT",
+    "state": "Northern Territory",
+    "total": 155
+  },
+  {
+    "state_code": "QLD",
+    "state": "Queensland",
+    "total": 612
+  },
+  {
+    "state_code": "SA",
+    "state": "South Australia",
+    "total": 319
+  },
+  {
+    "state_code": "TAS",
+    "state": "Tasmania",
+    "total": 230
+  },
+  {
+    "state_code": "VIC",
+    "state": "Victoria",
+    "total": 357
+  },
+  {
+    "state_code": "WA",
+    "state": "Western Australia",
+    "total": 614
+  }
+]

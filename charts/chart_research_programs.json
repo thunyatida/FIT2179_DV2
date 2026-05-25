@@ -1,0 +1,25 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "NESP TSR Hub research projects by program. Source: DCCEEW 2021.",
+  "width": 340,
+  "height": 240,
+  "data": {"url": "data/research_programs.json"},
+  "mark": {"type": "bar", "cornerRadiusTopRight": 3, "cornerRadiusBottomRight": 3},
+  "encoding": {
+    "y": {"field": "label", "type": "nominal", "sort": "-x", "axis": {"title": null, "labelFontSize": 12, "labelLimit": 200}},
+    "x": {
+      "field": "count", "type": "quantitative",
+      "axis": {"title": "Number of Projects", "titleFontSize": 12, "labelFontSize": 11, "grid": true}
+    },
+    "color": {
+      "field": "count", "type": "quantitative",
+      "scale": {"range": ["#aad4f5","#2980b9"]},
+      "legend": null
+    },
+    "tooltip": [
+      {"field": "label", "type": "nominal", "title": "Program"},
+      {"field": "count", "type": "quantitative", "title": "Projects"}
+    ]
+  },
+  "config": {"background": "transparent", "view": {"stroke": null}}
+}
